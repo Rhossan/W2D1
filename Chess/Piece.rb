@@ -1,4 +1,5 @@
 class Piece
+
   attr_accessor :color, :board, :pos
 
   def initialize(color, board, pos)
@@ -8,12 +9,14 @@ class Piece
   end
 
   def to_s
+    symbol
   end
 
   def empty?
   end
 
   def valid_moves
+
   end
 
   def pos=(val)

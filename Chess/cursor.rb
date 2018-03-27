@@ -1,3 +1,4 @@
+require 'byebug'
 require "io/console"
 
 KEYMAP = {
@@ -41,6 +42,7 @@ class Cursor
 
   def get_input
     key = KEYMAP[read_char]
+
     handle_key(key)
   end
 
@@ -76,8 +78,24 @@ class Cursor
   end
 
   def handle_key(key)
+    case key
+    when :return, :space
+      return @cursor_pos
+    when :left, :right, :up, :down
+
+      update_pos(MOVES[key])
+
+      return nil
+    when :ctrl_c
+      Process.exit(0)
+    end
   end
 
   def update_pos(diff)
+    new_pos= [cursor_pos.first + diff.first, cursor_pos.last + diff.last]
+
+    if board.valid_pos?(new_pos)
+      @cursor_pos = new_pos
+    end
   end
 end

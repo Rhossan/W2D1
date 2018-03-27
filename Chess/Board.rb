@@ -11,23 +11,45 @@ class Board
   end
 
   def fill_up_board
-    (0..1).each do |row|
-      (0..7).each do |col|
-        @board[row,col] = "white"#Piece.new("white", board, [row, col])
+    rook_white = [[0,0], [0,7]]
+    rook_black = [[7,0], [7,7]]
+    knight_white = [[0,1], [0,6]]
+    knight_black = [[7,1], [7,6]]
+    bishop_white = [[0,2], [0,5]]
+    bishop_black = [7,2], [7,5]]
+    queen_white =  [0,3]
+    queen_black =  [7,3]
+    king_white  =  [0,4]
+    king_black =   [7,4]
+
+    [1,6].each do |row|
+      (0..7).each do |pos|
+        if row == 1
+          self[[row,pos]] = Pawn.new(white,self,pos)
+        else
+          self[[row,pos]] = Pawn.new(black,self,pos)
+        end
       end
     end
+
+    rook_white.each {|pos| Rook.new(white,self,pos)}
+    rook_black.each {|pos| Rook.new(black,self,pos)}
+    knight_white.each {|pos| Knight.new(white,self,pos)}
+    knight_black.each {|pos| Knight.new(black,self,pos)}
+    bishop_white.each {|pos| Bishop.new(white,self,pos)}
+    bishop_black.each {|pos| Bishop.new(black,self,pos)}
+    queen_white.each {|pos| self[pos] = Queen.new(white, self, pos)}
+    queen_black.each {|pos| self[pos] = Queen.new(black, self, pos)}
+    king_white.each {|pos| self[pos] = King.new(white, self, pos)}
+    king_black.each {|pos| self[pos] = King.new(black, self, pos)}
+
 
     (2..5).each do |row|
-      (0..7).each do |col|
-        @board[row,col] = nil #Piece.new(empty) }
+      (0..7).each do |pos|
+        self[[row,pos]] = NullPiece.instance
       end
     end
 
-    ([6,7]).each do |row|
-      (0..7).each do |col|
-        @board[row,col] = "black"#Piece.new("black", board, [row, col])
-      end
-    end
   end
 
 
@@ -102,4 +124,4 @@ end
 # board.moves
 # board.invalid
 
-p board = Board.new
+#p board = Board.new
